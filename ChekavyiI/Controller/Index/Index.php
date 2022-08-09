@@ -2,10 +2,10 @@
 
 namespace Amasty\ChekavyiI\Controller\Index;
 
-use Magento\Framework\App\ActionInterface;
+use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
 
-class Index implements ActionInterface
+class Index implements HttpGetActionInterface
 {
     private ResultFactory $resultFactory;
 
@@ -17,7 +17,10 @@ class Index implements ActionInterface
 
     public function execute()
     {
-        die('Привет Magento. Привет Amasty. Я готов тебя покорить!');
-        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        $page->getConfig()->setMetaTitle('Main page');
+
+        return $page;
     }
 }
+

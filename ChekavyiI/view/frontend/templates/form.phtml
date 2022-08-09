@@ -1,0 +1,15 @@
+<?php
+/**
+ * @var \Amasty\ChekavyiI\Block\Index $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+$classes = (array) $block->getData('additional_classes');
+?>
+
+<form method="post" class="<?= $escaper->escapeHtmlAttr(join(' ', $classes)) ?>">
+    <input type="text" name="sku">
+    <input type="number" name="qty">
+    <input type="submit">
+</form>
+
