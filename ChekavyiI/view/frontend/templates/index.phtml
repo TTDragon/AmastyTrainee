@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var \Amasty\ChekavyiI\Block\Index $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+?>
+
+<h1><?= $escaper->escapeHtml($block->sayHelloTo('Amasty')) ?></h1>
+
+
+<div class="am-test">
+    <?= $block->getChildHtml() ?>
+</div>
