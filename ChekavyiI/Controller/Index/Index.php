@@ -7,15 +7,11 @@ use Magento\Framework\Controller\ResultFactory;
 
 class Index implements ActionInterface
 {
-    /**
-     * @var ResultFactory 
-     */
-    private $resultFactory;
+    private ResultFactory $resultFactory;
 
     public function __construct(
         ResultFactory $resultFactory
-    )
-    {
+    ) {
         $this->resultFactory = $resultFactory;
     }
 
