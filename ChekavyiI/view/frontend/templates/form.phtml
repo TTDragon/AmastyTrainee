@@ -2,14 +2,18 @@
 /**
  * @var \Amasty\ChekavyiI\Block\Index $block
  * @var \Magento\Framework\Escaper $escaper
+ * @var \Amasty\ChekavyiI\ViewModel\ModulesConfig $modulesConfig
  */
 
+$modulesConfig = $block->getData('modules_config');
 $classes = (array) $block->getData('additional_classes');
 ?>
 
 <form method="post" class="<?= $escaper->escapeHtmlAttr(join(' ', $classes)) ?>">
-    <input type="text" name="sku">
-    <input type="number" name="qty">
+    <input type="text" name="sku" style="margin: 25px" placeholder="Input your text">
+<?php if ($modulesConfig->isFieldQtyEnabled()): ?>
+    <input type="number" name="qty" value="1" style="margin: 25px">
+<?php endif; ?>
     <input type="submit">
 </form>
 

@@ -2,14 +2,18 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Amasty_ChekavyiI::CSS/mycss.css"></css>
+        <css src="Amasty_ChekavyiI::css/mycss.css"/>
     </head>
 
     <body>
         <referenceContainer name="content">
             <container name="chekavyii">
-                <block name="checkavyi.hello" class="Amasty\ChekavyiI\Block\Index" template="Amasty_ChekavyiI::index.phtml"/>
-                <block name="chekavyi.form" template="Amasty_ChekavyiI::form.phtml">
+                <block name="checkavyi.hello" class="Amasty\ChekavyiI\Block\Index" template="Amasty_ChekavyiI::index.phtml">
+                    <arguments>
+                        <argument name="modules_config" xsi:type="object">Amasty\ChekavyiI\ViewModel\ModulesConfig</argument>
+                    </arguments>
+                </block>
+                <block name="chekavyi.form" class="Amasty\ChekavyiI\Block\Index" ifconfig="test_config/general/enabled" template="Amasty_ChekavyiI::form.phtml">
                     <arguments>
                         <argument name="additional_classes" xsi:type="array">
                             <item name="0" xsi:type="string">testclass1</item>
@@ -17,8 +21,9 @@
                             <item name="2" xsi:type="string">testclass3</item>
                             <item name="3" xsi:type="string">testclass4</item>
                         </argument>
+                        <argument name="modules_config" xsi:type="object">Amasty\ChekavyiI\ViewModel\ModulesConfig</argument>
                     </arguments>
-                    <block name="chekavyi.additional" template="Amasty_ChekavyiI::additional.phtml"/>
+                    <block name="chekavyi.additional" ifconfig="test_config/general/enabled" template="Amasty_ChekavyiI::additional.phtml"/>
                 </block>
             </container>
         </referenceContainer>

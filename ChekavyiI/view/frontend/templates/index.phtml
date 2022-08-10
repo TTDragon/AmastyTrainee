@@ -2,13 +2,20 @@
 /**
  * @var \Amasty\ChekavyiI\Block\Index $block
  * @var \Magento\Framework\Escaper $escaper
+ * @var \Amasty\ChekavyiI\ViewModel\ModulesConfig $modulesConfig
  */
 
+$modulesConfig = $block->getData('modules_config');
 ?>
 
+<?php if ($modulesConfig->isModuleEnabled()): ?>
+
 <h1><?= $escaper->escapeHtml($block->sayHelloTo('Amasty')) ?></h1>
-
-
+<h1><?= $escaper->escapeHtml(__($modulesConfig->getWelcomeText())) ?></h1>
 <div class="am-test">
     <?= $block->getChildHtml() ?>
 </div>
+
+<?php else: ?>
+<p><?= $escaper->escapeHtml(__('Turn on ChekavyiI module in configuration')) ?></p>
+<?php endif; ?>
