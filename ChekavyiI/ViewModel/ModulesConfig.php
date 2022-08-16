@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Amasty\ChekavyiI\ViewModel;
 
 use Amasty\ChekavyiI\Model\ConfigProvider;

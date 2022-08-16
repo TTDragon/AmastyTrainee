@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Amasty\ChekavyiI\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -7,8 +9,14 @@ use Magento\Framework\Exception\LocalizedException;
 
 abstract class ConfigProviderAbstract
 {
+    /**
+     * @var ScopeConfigInterface
+     */
     private ScopeConfigInterface $scopeConfig;
 
+    /**
+     * @var string
+     */
     protected string $pathPrefix;
 
     public function __construct(

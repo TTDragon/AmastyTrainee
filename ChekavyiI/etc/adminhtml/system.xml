@@ -16,14 +16,14 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="welcometext" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Welcome text </label>
+                    <label>Welcome Text </label>
                     <validate>required-empty</validate>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                 </field>
                 <field id="qtyenabled" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Is qty field enabled</label>
+                    <label>Is Qty Field Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
