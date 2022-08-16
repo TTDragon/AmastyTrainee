@@ -9,11 +9,18 @@ $modulesConfig = $block->getData('modules_config');
 $classes = (array) $block->getData('additional_classes');
 ?>
 
-<form method="post" class="<?= $escaper->escapeHtmlAttr(join(' ', $classes)) ?>">
-    <input type="text" name="sku" style="margin: 25px" placeholder="Input your text">
+<form method="post"
+      data-mage-init='{"validation": {}}'
+      class="<?= $escaper->escapeHtmlAttr(join(' ', $classes)) ?>"
+      action="<?php echo $block->getUrl('chekavyii/index/addToCart')?>">
+    <input type="text" name="sku" class="input-form-phtml" data-validate='{"required":true}'>
+    <input type="text" name="form_key" hidden value="<?= $block->getFormKey() ?>">
 <?php if ($modulesConfig->isFieldQtyEnabled()): ?>
-    <input type="number" name="qty" value="1" style="margin: 25px">
+    <input type="number"
+           name="qty"
+           class="input-form-phtml"
+           data-validate='{"required":true, "not-negative-amount":true, "integer":true, "validate-greater-than-zero":true}'
+           value="1">
 <?php endif; ?>
-    <input type="submit">
+    <input type="submit" value="Send">
 </form>
-
