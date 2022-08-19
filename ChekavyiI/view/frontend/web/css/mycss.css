@@ -5,3 +5,17 @@
 .input-form-phtml {
     margin: 25px;
 }
+
+.test-autocomplete-row {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-content: space-between;
+    border-color: black;
+    border-width: 1px;
+}
+
+.test-autocomplete-list {
+    display: flex;
+    flex-direction: column;
+}
