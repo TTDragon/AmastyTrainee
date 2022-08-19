@@ -1,0 +1,27 @@
+<?php
+/**
+ * @var \Amasty\ChekavyiI\Block\Index $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<div data-bind="scope:'testAutocomplete'">
+    <!-- ko template: getTemplate() -->
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "testAutocomplete": {
+                        "component":"Amasty_ChekavyiI/js/koAutocomplete",
+                        "template": "Amasty_ChekavyiI/koAutocomplete",
+                        "backendUrl": "<?= $block->getUrl('chekavyii/index/searchProduct') ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>
