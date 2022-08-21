@@ -1,0 +1,26 @@
+<?php
+/**
+ * @var \Amasty\ChekavyiI\Block\Index $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<div data-bind="scope:'testStopwatch'">
+    <!-- ko template: getTemplate() -->
+    <!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "testStopwatch": {
+                        "component":"Amasty_ChekavyiI/js/koStopwatch",
+                        "template": "Amasty_ChekavyiI/koStopwatch"
+                    }
+                }
+            }
+        }
+    }
+</script>
