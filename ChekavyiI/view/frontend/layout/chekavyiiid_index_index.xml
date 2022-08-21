@@ -26,6 +26,7 @@
                     <block name="chekavyi.additional" ifconfig="test_config/general/enabled" template="Amasty_ChekavyiI::additional.phtml"/>
                 </block>
                 <block name="chekavyi.search" ifconfig="test_config/general/enabled" template="Amasty_ChekavyiI::search.phtml"/>
+                <block name="chekavyi.stopwatch" ifconfig="test_config/general/enabled" template="Amasty_ChekavyiI::stopwatch.phtml"/>
             </container>
         </referenceContainer>
     </body>

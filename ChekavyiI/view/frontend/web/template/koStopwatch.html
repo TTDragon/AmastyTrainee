@@ -1,0 +1,12 @@
+<div class="main-watch">
+    <div class="stopwatch-row stopwatch-display">
+        <span class="stopwatch-display-part" data-bind="text: hours"></span>
+        <span class="stopwatch-display-part" data-bind="text: minutes"></span>
+        <span class="stopwatch-display-part" data-bind="text: seconds"></span>
+    </div>
+    <div class="stopwatch-row">
+        <input type="button" class="action primary" data-bind="click: $data.init.bind($data)" value="Start">
+        <input type="button" class="action primary" data-bind="click: $data.stop.bind($data)" value="Stop">
+        <input type="button" class="action primary" data-bind="click: $data.pause.bind($data)" value="Pause">
+    </div>
+</div>
