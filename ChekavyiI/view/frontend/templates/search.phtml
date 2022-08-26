@@ -18,7 +18,7 @@
                     "testAutocomplete": {
                         "component":"Amasty_ChekavyiI/js/koAutocomplete",
                         "template": "Amasty_ChekavyiI/koAutocomplete",
-                        "backendUrl": "<?= $block->getUrl('chekavyii/index/searchProduct') ?>"
+                        "backendUrl": "<?= $escaper->escapeUrl($block->getSearchUrl()) ?>"
                     }
                 }
             }

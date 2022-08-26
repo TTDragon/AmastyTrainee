@@ -4,7 +4,10 @@ define(['uiComponent', 'jquery'], function (Component, $) {
             searchText: '',
             searchResult: [],
             backendUrl: '',
-            currentRequest: null
+            currentRequest: null,
+            minAutocompleteLength: 3,
+            maxAutocompleteSuggestions: 5
+
         },
 
         initObservable: function () {
@@ -39,11 +42,11 @@ define(['uiComponent', 'jquery'], function (Component, $) {
         },
 
         getMaxAutocompleteSuggestions: function () {
-            return 5;
+            return this.maxAutocompleteSuggestions;
         },
 
         getMinAutocompleteLength: function () {
-            return 3;
+            return this.minAutocompleteLength;
         }
     });
 })

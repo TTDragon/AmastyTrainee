@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Amasty_SecondChekavyjiI" translate="label" sortOrder="10">
+            <label>Amasty Second Chekavyji I Module</label>
+        </tab>
+        <section id="test2_config" translate="label" type="text" sortOrder="10"  showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Second ChekavyiI Module Config</label>
+            <tab>Amasty_SecondChekavyjiI</tab>
+            <resource>Amasty_SecondChekavyjiI::config</resource>
+            <group id="general2" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enabled" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Is module enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="forsku" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>For SKU</label>
+                    <validate>required-empty</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="promosku" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Promo SKU</label>
+                    <validate>required-empty validate-length maximum-length-8</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

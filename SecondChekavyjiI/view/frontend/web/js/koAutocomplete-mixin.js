@@ -1,9 +1,14 @@
 define(function () {
     'use strict';
 
+
     var mixin = {
+        defaults: {
+            minAutocompleteLength: 5
+        },
+
         getMinAutocompleteLength: function () {
-            return 5;
+            return this.minAutocompleteLength;
         }
     };
 

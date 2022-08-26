@@ -3,7 +3,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="Amasty_ChekavyiI" translate="label" sortOrder="10">
-            <label> Amasty Chekavyi I module</label>
+            <label>Amasty Chekavyi I Module</label>
         </tab>
         <section id="test_config" translate="label" type="text" sortOrder="10"  showInDefault="1" showInWebsite="1" showInStore="1">
             <label>ChekavyiI Module Config</label>
@@ -16,7 +16,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="welcometext" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Welcome Text </label>
+                    <label>Welcome Text</label>
                     <validate>required-empty</validate>
                     <depends>
                         <field id="enabled">1</field>

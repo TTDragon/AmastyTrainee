@@ -8,9 +8,12 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Catalog\Api\Data\ProductInterface;
+
 
 class SearchProduct implements HttpGetActionInterface
 {
+    public const HTTP_NOT_ACCEPTABLE = 406;
     public const PARAM_SKU = 'sku';
     public const MAX_ITEMS = 'max_items';
     public const MIN_LENGTH = 3;
@@ -46,14 +49,13 @@ class SearchProduct implements HttpGetActionInterface
     public function execute()
     {
         $sku = $this->request->getParam(self::PARAM_SKU, '');
-        $maxItemsAmount = (int) $this->request->getParam(self::MAX_ITEMS, self::MAX_ITEMS_DEFAULT);
-        $maxItemsAmount = max(self::MAX_ITEMS_MIN, min(self::MAX_ITEMS_MAX, $maxItemsAmount));
+        $maxItemsAmount = $this->getNormalizedValue();
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
         if (strlen($sku) >= self::MIN_LENGTH) {
             $productCollection = $this->collectionFactory->create();
-            $productCollection->addFieldToFilter('sku', ['like' => "{$sku}%"]);
-            $productCollection->addAttributeToSelect(['name']);
+            $productCollection->addFieldToFilter(ProductInterface::SKU, ['like' => "{$sku}%"]);
+            $productCollection->addAttributeToSelect([ProductInterface::NAME]);
             $productCollection->setPageSize($maxItemsAmount);
             $responseArray = [];
 
@@ -67,9 +69,19 @@ class SearchProduct implements HttpGetActionInterface
             $result->setData($responseArray);
         } else {
             $result->setData(['message' => __('Empty SKU is not allowed')]);
-            $result->setHttpResponseCode(406);
+            $result->setHttpResponseCode(self::HTTP_NOT_ACCEPTABLE);
         }
 
         return $result;
+    }
+
+    /**
+     * @return int
+     */
+    private function getNormalizedValue(): int
+    {
+        $maxItemsAmount = (int) $this->request->getParam(self::MAX_ITEMS, self::MAX_ITEMS_DEFAULT);
+
+        return max(self::MAX_ITEMS_MIN, min(self::MAX_ITEMS_MAX, $maxItemsAmount));
     }
 }

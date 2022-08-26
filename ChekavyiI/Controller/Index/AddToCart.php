@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Amasty\ChekavyiI\Controller\Index;
 
+use Exception;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Cart\RequestQuantityProcessor;
 use Magento\Checkout\Model\SessionFactory;
@@ -11,16 +13,20 @@ use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
+use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
 use Magento\Framework\Locale\ResolverInterface;
 use Magento\Framework\Message\ManagerInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
-use Exception;
 
 class AddToCart implements HttpPostActionInterface
 {
     public const PARAM_QTY = 'qty';
     public const PARAM_SKU = 'sku';
+
+    /**
+     * @var EventManagerInterface
+     */
+    private EventManagerInterface  $eventManager;
 
     /**
      * @var RequestInterface
@@ -76,7 +82,8 @@ class AddToCart implements HttpPostActionInterface
         ResolverInterface $resolver,
         ProductRepositoryInterface $productRepository,
         SessionFactory $checkoutSession,
-        CartRepositoryInterface $cartRepository
+        CartRepositoryInterface $cartRepository,
+        EventManagerInterface $eventManager
     ) {
         $this->request = $request;
         $this->formKeyValidator = $formKeyValidator;
@@ -87,6 +94,7 @@ class AddToCart implements HttpPostActionInterface
         $this->productRepository = $productRepository;
         $this->checkoutSession = $checkoutSession;
         $this->cartRepository = $cartRepository;
+        $this->eventManager = $eventManager;
     }
 
     public function execute()
@@ -119,7 +127,7 @@ class AddToCart implements HttpPostActionInterface
         $qty = $filter->filter($qty);
 
         try {
-            $product = $this->productRepository->get($this->getRequest()->getParam('sku'));
+            $product = $this->productRepository->get($sku);
             $productType = $product->getTypeId();
 
             if ($productType === Type::TYPE_SIMPLE) {
@@ -127,6 +135,12 @@ class AddToCart implements HttpPostActionInterface
                 $quote = $session->getQuote();
                 $quote->addProduct($product, $qty);
                 $this->cartRepository->save($quote);
+                $this->eventManager->dispatch(
+                    'amasty_add_product',
+                    [
+                        'customer_sku' => $sku
+                    ]
+                );
             } else {
                 $this->messageManager->addErrorMessage(__('This product is not simple'));
             }

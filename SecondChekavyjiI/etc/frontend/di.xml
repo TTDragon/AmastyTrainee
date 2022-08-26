@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="Amasty_SecondChekavyjiI::changeExecute"
+                type="Amasty\SecondChekavyjiI\Plugin\Checkout\Controller\Cart\Add\ChangeExecute"
+                disabled="true"
+        />
+    </type>
+    <type name="Amasty\ChekavyiI\Block\Index">
+        <plugin name="Amasty_SecondChekavyjiI::changeFormAction"
+                type="Amasty\SecondChekavyjiI\Plugin\ChekavyiI\Block\Index\ChangeFormAction"
+                disabled="true"
+        />
+    </type>
+    <type name="Amasty\SecondChekavyjiI\Model\ChekavyiI\Controller\Index\Index\ChangeIndexPhp">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <preference for="Amasty\ChekavyiI\Controller\Index\Index"
+                type="Amasty\SecondChekavyjiI\Model\ChekavyiI\Controller\Index\Index\ChangeIndexPhp"
+    />
+</config>
