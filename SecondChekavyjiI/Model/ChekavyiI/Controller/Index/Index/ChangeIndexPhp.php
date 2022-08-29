@@ -39,6 +39,7 @@ class ChangeIndexPhp extends Index
         } else {
             $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
             $result->setHttpResponseCode(self::HTTP_NOT_FOUND);
+
             return $result;
         }
     }

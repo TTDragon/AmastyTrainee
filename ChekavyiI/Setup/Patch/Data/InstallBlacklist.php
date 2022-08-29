@@ -6,6 +6,7 @@ namespace Amasty\ChekavyiI\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchInterface;
+use Amasty\ChekavyiI\Model\ResourceModel\Blacklist as ResourceBlacklist;
 use Amasty\ChekavyiI\Model\BlacklistFactory;
 
 class InstallBlacklist implements DataPatchInterface
@@ -15,10 +16,17 @@ class InstallBlacklist implements DataPatchInterface
      */
     private BlacklistFactory $blacklistFactory;
 
+    /**
+     * @var ResourceBlacklist
+     */
+    private ResourceBlacklist $resourceBlacklist;
+
     public function __construct(
-        BlacklistFactory $blacklistFactory
+        BlacklistFactory $blacklistFactory,
+        ResourceBlacklist $resourceBlacklist
     ) {
         $this->blacklistFactory = $blacklistFactory;
+        $this->resourceBlacklist = $resourceBlacklist;
     }
 
     public static function getDependencies()
@@ -33,6 +41,19 @@ class InstallBlacklist implements DataPatchInterface
 
     public function apply()
     {
-        // TODO: Implement apply() method.
+        $skus = [
+            '24-MB01' => 100,
+            '24-MB02' => 100,
+            '24-MB03' => 100,
+            '24-MB04' => 100,
+            '24-MB05' => 100
+        ];
+
+        foreach ($skus as $sku => $qty) {
+            $blacklist = $this->blacklistFactory->create();
+            $blacklist->setSku($sku);
+            $blacklist->setQty($qty);
+            $this->resourceBlacklist->save($blacklist);
+        }
     }
 }
