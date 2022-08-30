@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Amasty\ChekavyiI\Controller\Index;
 
+use Amasty\ChekavyiI\Model\BlacklistFactory;
+use Amasty\ChekavyiI\Model\ResourceModel\Blacklist as ResourceBlacklist;
+use Amasty\ChekavyiI\Model\ResourceModel\Blacklist\CollectionFactory as BlacklistCollectionFactory;
 use Exception;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product\Type;
+use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
+use Magento\Checkout\Model\Cart as ModelCart;
 use Magento\Checkout\Model\Cart\RequestQuantityProcessor;
 use Magento\Checkout\Model\SessionFactory;
 use Magento\Framework\App\Action\HttpPostActionInterface;
@@ -22,6 +27,18 @@ class AddToCart implements HttpPostActionInterface
 {
     public const PARAM_QTY = 'qty';
     public const PARAM_SKU = 'sku';
+
+    private ModelCart $modelCart;
+
+    /**
+     * @var ProductResource
+     */
+    private ProductResource $productResource;
+
+    /**
+     * @var BlacklistCollectionFactory
+     */
+    private BlacklistCollectionFactory $blacklistCollectionFactory;
 
     /**
      * @var EventManagerInterface
@@ -83,8 +100,14 @@ class AddToCart implements HttpPostActionInterface
         ProductRepositoryInterface $productRepository,
         SessionFactory $checkoutSession,
         CartRepositoryInterface $cartRepository,
-        EventManagerInterface $eventManager
+        EventManagerInterface $eventManager,
+        BlacklistFactory $blacklistFactory,
+        ResourceBlacklist $resourceBlacklist,
+        BlacklistCollectionFactory $blacklistCollectionFactory,
+        ProductResource $productResource,
+        ModelCart $modelCart
     ) {
+        $this->blacklistCollectionFactory = $blacklistCollectionFactory;
         $this->request = $request;
         $this->formKeyValidator = $formKeyValidator;
         $this->messageManager = $messageManager;
@@ -95,6 +118,8 @@ class AddToCart implements HttpPostActionInterface
         $this->checkoutSession = $checkoutSession;
         $this->cartRepository = $cartRepository;
         $this->eventManager = $eventManager;
+        $this->productResource = $productResource;
+        $this->modelCart = $modelCart;
     }
 
     public function execute()
@@ -127,14 +152,33 @@ class AddToCart implements HttpPostActionInterface
         $qty = $filter->filter($qty);
 
         try {
+            if (!empty($this->checkSkuInBlacklist($sku))){
+                $blacklistQty = $this->checkSkuInBlacklist($sku);
+                $productId = $this->productResource->getIdBySku($sku);
+                $items = $this->modelCart->getQuote()->getAllItems();
+                $productQtyInCart = 0;
+
+                foreach ($items as $item) {
+                    if ($item->getProductId() === $productId) {
+                        $productQtyInCart = $item->getQty();
+                    }
+                }
+
+                if ($qty + $productQtyInCart > $blacklistQty) {
+
+                    if ($blacklistQty >= $productQtyInCart) {
+                        $qty = $blacklistQty - $productQtyInCart;
+                    }
+
+                    $this->messageManager->addErrorMessage(__("It is possible to add only $qty products"));
+                }
+            }
+
             $product = $this->productRepository->get($sku);
             $productType = $product->getTypeId();
 
             if ($productType === Type::TYPE_SIMPLE) {
-                $session = $this->checkoutSession->create();
-                $quote = $session->getQuote();
-                $quote->addProduct($product, $qty);
-                $this->cartRepository->save($quote);
+                $this->addProductToQuote($product, $qty);
                 $this->eventManager->dispatch(
                     'amasty_add_product',
                     [
@@ -144,6 +188,7 @@ class AddToCart implements HttpPostActionInterface
             } else {
                 $this->messageManager->addErrorMessage(__('This product is not simple'));
             }
+
         } catch (Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
@@ -154,5 +199,27 @@ class AddToCart implements HttpPostActionInterface
     private function getRequest(): RequestInterface
     {
         return $this->request;
+    }
+
+    private function addProductToQuote($product, $qty)
+    {
+        $session = $this->checkoutSession->create();
+        $quote = $session->getQuote();
+        $quote->addProduct($product, $qty);
+        $this->cartRepository->save($quote);
+    }
+
+    private function checkSkuInBlacklist($sku)
+    {
+        /** @var \Amasty\ChekavyiI\Model\ResourceModel\Blacklist\Collection $blacklistCollection */
+        $blacklistCollection = $this->blacklistCollectionFactory->create();
+        $blacklistCollection->addFieldToFilter('sku', ['eq' => $sku]);
+        $qtuBlacklistSku = null;
+
+        foreach ($blacklistCollection as $blaklistSku) {
+            $qtuBlacklistSku = $blaklistSku->getQty();
+        }
+
+        return $qtuBlacklistSku;
     }
 }

@@ -27,12 +27,14 @@ define([
         init: function () {
             if (this.intervalDescriptor === null) {
                 this.intervalDescriptor = setInterval(
-                    () => {
-                        this.stopWatch(this.stopWatch() + 1);
-                    },
+                    this.increasingTime.bind(this),
                     1000
                 );
             }
+        },
+
+        increasingTime: function () {
+            this.stopWatch(this.stopWatch() + 1);
         },
 
         pause: function () {

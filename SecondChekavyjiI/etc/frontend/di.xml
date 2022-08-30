@@ -18,7 +18,7 @@
             <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
         </arguments>
     </type>
-    <preference for="Amasty\ChekavyiI\Controller\Index\Index"
+<!--    <preference for="Amasty\ChekavyiI\Controller\Index\Index"
                 type="Amasty\SecondChekavyjiI\Model\ChekavyiI\Controller\Index\Index\ChangeIndexPhp"
-    />
+    />-->
 </config>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="amasty_chekavyii_blacklist" resource="default" comment="Amasty sku blacklist">
+        <column xsi:type="int" name="blacklist_sku_id" identity="true" comment="Sku Id Auto Increment" />
+        <column xsi:type="varchar" name="sku" length="14" nullable="false" comment="Sku Value" />
+        <column xsi:type="double" name="qty" comment="Qty Value" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="blacklist_sku_id" />
+        </constraint>
+    </table>
+</schema>

@@ -30,14 +30,6 @@ class ChangePromoStock
      */
     public function aroundExecute(PromoStock $subject, callable $proceed, Observer $observer)
     {
-        return $this->getRequest()->isXmlHttpRequest() ? null : $proceed($observer);
-    }
-
-    /**
-     * @return RequestInterface
-     */
-    private function getRequest(): RequestInterface
-    {
-        return $this->request;
+        return $this->request->isXmlHttpRequest() ? null : $proceed($observer);
     }
 }
