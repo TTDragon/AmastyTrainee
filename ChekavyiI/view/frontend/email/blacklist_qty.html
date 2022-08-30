@@ -1,0 +1,14 @@
+<!--@subject Amasty ChekavyiI Qty In Blacklist @-->
+<!--@vars {
+"var blacklist_sku":"Blacklist Sku",
+"var blacklist_qty":"Blacklist Qty"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p>
+    {{trans "Товаров со sku %blacklist_sku в наличии %blacklist_qty" blacklist_sku=$blacklist_sku blacklist_qty=$blacklist_qty}}
+</p>
+
+{{layout handle="amasty_chekavyii_email" blacklist_qty=$blacklist_qty area="frontend"}}
+
+{{template config_path="design/email/footer_template"}}
