@@ -6,6 +6,9 @@
             <general>
                 <enabled>1</enabled>
                 <qtyenabled>1</qtyenabled>
+                <amasty_chekavyii_email_template>
+                    test_config_general_amasty_chekavyii_email_template
+                </amasty_chekavyii_email_template>
             </general>
         </test_config>
     </default>

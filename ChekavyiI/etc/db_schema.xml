@@ -5,7 +5,8 @@
     <table name="amasty_chekavyii_blacklist" resource="default" comment="Amasty sku blacklist">
         <column xsi:type="int" name="blacklist_sku_id" identity="true" comment="Sku Id Auto Increment" />
         <column xsi:type="varchar" name="sku" length="14" nullable="false" comment="Sku Value" />
-        <column xsi:type="double" name="qty" comment="Qty Value" />
+        <column xsi:type="double" name="qty" comment="Qty Value"/>
+        <column xsi:type="varchar" name="emailBody" length="1024" comment="Email Body"/>
 
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="blacklist_sku_id" />

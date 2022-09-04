@@ -9,6 +9,7 @@ class ConfigProvider extends ConfigProviderAbstract
     public const XML_PATH_IS_MODULE_ENABLED = 'general/enabled';
     public const XML_PATH_IS_WELCOME_TEXT = 'general/welcometext';
     public const XML_PATH_IS_QTY_ENABLED = 'general/qtyenabled';
+    public const XML_PATH_IS_EMAIL_TEXT = 'general/emailaddress';
 
     protected string $pathPrefix = 'test_config';
 
@@ -25,5 +26,10 @@ class ConfigProvider extends ConfigProviderAbstract
     public function isFieldQtyEnabled(): bool
     {
         return (bool) $this->getValue(self::XML_PATH_IS_QTY_ENABLED);
+    }
+
+    public function getEmailAddress(): string
+    {
+        return (string) $this->getValue(self::XML_PATH_IS_EMAIL_TEXT);
     }
 }

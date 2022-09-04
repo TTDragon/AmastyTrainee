@@ -28,6 +28,9 @@ class AddToCart implements HttpPostActionInterface
     public const PARAM_QTY = 'qty';
     public const PARAM_SKU = 'sku';
 
+    /**
+     * @var ModelCart
+     */
     private ModelCart $modelCart;
 
     /**

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="amasty_chekavyii_email_template"
+    <template id="test_config_general_amasty_chekavyii_email_template"
               label="Amasty Chekavyii"
               file="blacklist_qty.html"
               type="html"

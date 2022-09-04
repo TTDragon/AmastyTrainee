@@ -1,0 +1,9 @@
+<?php
+/**
+ * @var Amasty\ChekavyiI\Block\Email\Email $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+
+<?= $escaper->escapeHtml(__('Blacklist Qty is: ')) ?>
+<?= $block->getBlacklistItemQty(); ?>

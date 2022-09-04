@@ -28,7 +28,7 @@ class BlacklistRepository
        $this->blacklistFactory = $blacklistFactory;
     }
 
-    public function getById(int $blacklistSkuId): Blacklist
+    public function getById($blacklistSkuId): Blacklist
     {
         $blacklistItem = $this->blacklistFactory->create();
         $this->blacklistResource->load($blacklistItem, $blacklistSkuId);
